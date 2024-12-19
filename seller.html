@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seller Table</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          /* background: linear-gradient(to bottom, #ffffff, #f0f0f0); */
+          
+          margin: 0;
+          padding: 0;
+        }
+    
+        #container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background: linear-gradient(135deg, #6dd5ed, #2193b0);
+          justify-content: center;
+          padding: 50px;
+          gap: 20px;
+          flex-wrap: wrap;
+        }
+    
+        #parent, #parent1 {
+          background-color: lightblue;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          border-radius: 10px;
+          padding: 20px;
+          width: 400px;
+          transition: transform 0.3s ease;
+        }
+    
+        #parent:hover, #parent1:hover {
+          transform: translateY(-10px);
+        }
+    
+        h1 {
+          text-align: center;
+          font-size: 20px;
+          color: #333333;
+          margin-bottom: 20px;
+        }
+    
+        input[type="text"], input[type="url"] {
+          width: 90%;
+          padding: 10px;
+          margin: 5px 0;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 14px;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+    
+        input[type="text"]:focus, input[type="url"]:focus {
+          border-color: #007bff;
+          box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+          outline: none;
+        }
+    
+        button {
+          width: 100%;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          background: linear-gradient(to right, #4CAF50, #45a049);
+          color: white;
+          font-size: 16px;
+          cursor: pointer;
+          transition: background 0.3s ease, transform 0.2s ease;
+        }
+    
+        button:hover {
+          background: linear-gradient(to right, #45a049, #4CAF50);
+          transform: scale(1.05);
+        }
+    
+        button:active {
+          transform: scale(0.95);
+        }
+    
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+    
+        #container {
+          animation: fadeIn 1s ease-in;
+        }
+      </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="parent">
+        <h1>To ADD Data to Products<br/>(POST DATA)</h1>
+
+            <input type="text" id="ip1" placeholder="Enter Category of a Product"><br><br>
+            <input type="url"  id="ip2" placeholder="Image URL"><br><br>
+            <input type="text" id="ip3" placeholder="Enter Price "><br><br>
+            <input type="text" id="ip4" placeholder="Enter Rating"><br><br><br>
+            <button id="btn1">POST DATA</button>
+
+        </div>
+      <!---------------------------------------------                  ---------------------------------------------------------------------->
+
+      <!-- NOt Working -->
+      <div id="parent1">
+        <h1>PUT Data to the Products</h1>
+
+        <input
+          type="text"
+          id="ip5"
+          placeholder="Mention ID Number"
+        /><br /><br />
+        <input type="text" id="ip6" placeholder="Discount" /><br /><br />
+        <input type="text" id="ip7" placeholder="Enter Description" />
+        <button id="btn2">PUT DATA</button>
+      </div>
+    </div>
+
+    <script>
+    //    POST the data (Add new Data to Products)
+
+          let category = document.getElementById("ip1");
+          let imge = document.getElementById("ip2");
+          let price = document.getElementById("ip3");
+          let rating = document.getElementById("ip4");
+          let btn1 = document.getElementById("btn1")
+
+          // POST new data to DataBase
+          btn1.addEventListener("click", ()=>{
+              let data1 = category.value;
+              let data2 = imge.value;
+              let data3 = price.value;
+              let data4 = rating.value;
+
+              console.log(data1, data2, data3, data4);
+              obj = {
+                  category : data1,
+                  image : data2,
+                  price : data3,
+                  rating : data4
+              }
+              postdata(obj);
+          });
+          async function postdata(obj) {
+          let res = await fetch("http://localhost:3000/products/",{
+            method:"POST",
+            headers:{
+              "Content-Type":"application/json"
+            },
+            body: JSON.stringify(obj)
+
+          })
+
+        }
+      // ------------------------------------------------------------------------------------------------------------------->
+
+      //   PUT Data to Products
+        // Not working
+      let ide = document.getElementById("ip5");
+      let disc = document.getElementById("ip6");
+      let desc = document.getElementById("ip7");
+
+      let btn2 = document.getElementById("btn2");
+
+      btn2.addEventListener("click", () => {
+        let data1 = ide.value;
+        let data2 = disc.value;
+        let data3 = desc.value;
+
+        obj2 = {
+          id: data1,
+          discount: data2,
+          description: data3,
+        };
+        putdata(obj2);
+      });
+      
+      async function putdata(obj2) {
+        console.log(obj2.id);
+        let res = await fetch(`http://localhost:3000/products/${obj2.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(obj2),
+        });
+      }
+
+      // ----------------------------------------------------------------------------------------------->
+    </script>
+  </body>
+</html>

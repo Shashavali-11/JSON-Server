@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #4facfe, #00f2fe);
+            color: #fff;
+        }
+
+        #main {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            animation: slideDown 0.8s ease-in-out;
+        }
+
+        select {
+            padding: 10px;
+            width: 60%;
+            max-width: 300px;
+            margin: 20px 0;
+            border: 2px solid #fff;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: black;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        select:hover, select:focus {
+            border-color: #00f2fe;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1rem;
+            color: #fff;
+            background: #00f2fe;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            background: #4facfe;
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <h1>Welcome to My Products App</h1>
+        <select id="category">
+            <option value="">Select Category</option>
+            <option value="Admin">Admin</option>
+            <option value="Buyer">Buyer</option>
+            <option value="Seller">Seller </option>
+        </select>
+        <button id="btn">Start</button>
+    </div>
+
+    <script>
+        let button = document.getElementById("btn");
+        let main = document.getElementById("main");
+
+        button.addEventListener("click",()=>{
+            let category = document.getElementById("category").value;
+
+            if (!category) {
+                alert("Please select a category!");
+                return;
+            }
+            if(category == "Admin"){window.open("admin.html");}
+            if(category == "Buyer"){window.open("buyer.html");}
+            if(category == "Seller"){window.open("seller.html");}
+            
+
+        })
+
+
+
+    </script>
+
+
+    
+</body>
+</html>

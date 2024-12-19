@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buyer Table</title>
+    <style>
+      /* styles.css */
+      body {
+        font-family: Arial, sans-serif;
+        /* background-color: #e3f2fd; Light blue background for a soft look */
+        background-color: lightblue;
+        background-image: url("background-pattern.png"); /* Add a subtle background pattern image */
+        background-size: cover;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 20px;
+      }
+
+      #parent {
+        display: grid;
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(300px, 1fr)
+        ); /* Responsive grid */
+        gap: 20px;
+        justify-content: center;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        background: rgba(
+          255,
+          255,
+          255,
+          0.8
+        ); /* Semi-transparent white background for grid */
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+      }
+
+      #parent div {
+        background: linear-gradient(
+          145deg,
+          #ffffff,
+          #f1f1f1
+        ); /* Gradient background for cards */
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 16px;
+        text-align: center;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      }
+
+      #parent div:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      #parent div p {
+        margin: 10px 0;
+        font-size: 16px;
+        color: #444;
+      }
+
+      #parent div img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 10px 0;
+      }
+
+      b {
+        color: #333;
+        font-weight: bold;
+      }
+
+      /* Add styling for headings if needed */
+      h1,
+      h2 {
+        text-align: center;
+        color: #004d40; /* Deep teal for contrast */
+        margin-bottom: 20px;
+      }
+      .pro:hover {
+        cursor: pointer;
+      }
+
+      /* Add media query for better responsiveness */
+      @media (max-width: 768px) {
+        body {
+          padding: 10px;
+        }
+        #parent {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="color: black">PRODUCTS TABLE</h1>
+    <div id="parent"></div>
+
+    <script>
+      let parent = document.getElementById("parent");
+
+      async function buyerdata() {
+        parent.innerHTML = "";
+        let result = await fetch(`http://localhost:3000/products`);
+        let newdata = await result.json();
+        let data = newdata.map((val) => {
+          console.log(val);
+          let div = document.createElement("div");
+          div.className = "pro";
+          div.style.background = "grey";
+
+          let i1 = document.createElement("p");
+          i1.style.color = "white";
+          i1.innerHTML = `<b>Category : </b> ${val.category} `;
+          
+          let i2 = document.createElement("img");
+          i2.src = val.image;
+          i2.style.height = "200px";
+          i2.style.width = "200px";
+
+          let i3 = document.createElement("p");
+          i3.style.color = "white";
+          i3.innerHTML = `<b>Price : </b>$ ${val.price} `;
+          let i4 = document.createElement("p");
+          i4.style.color = "white";
+          i4.innerHTML = `<b>Rating : </b> ${val.rating} `;
+
+          // let i5 = document.createElement("p");
+          // i5.style.color = "white";
+          // i5.innerHTML = `<b>Discount : </b> ${val.discount} `;
+
+
+          div.append(i1);
+          div.append(i2);
+          div.append(i3);
+          div.append(i4);
+          // div.append(i5);
+
+
+          parent.append(div);
+        });
+      }
+      buyerdata();
+    </script>
+  </body>
+</html>

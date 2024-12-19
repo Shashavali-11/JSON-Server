@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin</title>
+    <style>
+        /* General styles */
+        body {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Arial', sans-serif;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          background: linear-gradient(135deg, #6dd5ed, #2193b0);
+          overflow: hidden;
+        }
+      
+        .container {
+          text-align: center;
+          background: rgba(255, 255, 255, 0.8);
+          padding: 30px;
+          border-radius: 15px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+          animation: fadeInScale 1.2s ease-in-out;
+        }
+      
+        /* Input field styling */
+        #ip1 {
+          width: 300px;
+          padding: 15px;
+          font-size: 16px;
+          border: 2px solid #ccc;
+          border-radius: 8px;
+          outline: none;
+          transition: 0.3s ease;
+        }
+      
+        #ip1:focus {
+          border-color: #1e90ff;
+          box-shadow: 0 0 10px rgba(30, 144, 255, 0.6);
+          transform: scale(1.05);
+        }
+      
+        /* Button styling */
+        #btn1 {
+          margin-top: 20px;
+          padding: 12px 25px;
+          font-size: 16px;
+          color: white;
+          background-color: #ff6347;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          outline: none;
+          transition: all 0.3s ease;
+          animation: slideUp 1s ease-in-out;
+        }
+      
+        #btn1:hover {
+          background-color: #d9534f;
+          transform: scale(1.1);
+          box-shadow: 0 8px 20px rgba(217, 83, 79, 0.4);
+        }
+      
+        #btn1:active {
+          transform: scale(0.95);
+          box-shadow: 0 4px 10px rgba(217, 83, 79, 0.3);
+        }
+      
+        /* Animations */
+        @keyframes fadeInScale {
+          from {
+            opacity: 0;
+            transform: scale(0.8);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      
+        /* Background animation */
+        body::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0));
+          animation: moveBackground 10s infinite linear;
+          z-index: -1;
+        }
+      
+        @keyframes moveBackground {
+          from {
+            transform: translate(-50%, -50%) rotate(0deg);
+          }
+          to {
+            transform: translate(-50%, -50%) rotate(360deg);
+          }
+        }
+      </style>
+      
+  </head>
+  <body>
+    <div class="container">
+      <input type="number" id="ip1" placeholder="Enter ID Number" /><br /><br />
+
+      <button id="btn1">DELETE DATA</button>
+    </div>
+    <!-- <div id="parent"></div> -->
+
+    <script>
+      let ide = document.getElementById("ip1");
+      let btn1 = document.getElementById("btn1");
+
+      btn1.addEventListener("click", () => {
+        let data1 = ide.value;
+        if(data1){
+            obj = {
+                id: data1,
+            };
+
+            deletedata(obj);
+
+        }else{
+            alert("Fill the input.")
+        }
+        
+      });
+
+      async function deletedata(obj) {
+        let res = await fetch(`http://localhost:3000/products/${obj.id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(obj),
+        });
+        alert(` ID ${obj.id} is deleted`)
+      }
+    </script>
+  </body>
+</html>
